@@ -94,14 +94,17 @@ def load_users():
         save_users(default)
         return default
     with open(USERS_FILE, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    if 'GTMND' not in data:
+    with open(USERS_FILE, 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+if 'GTMND' not in data:
     data['GTMND'] = {
         "password": "GTMND",
         "role": "admin"
     }
     save_users(data)
-    return data
+
+return data
 
 def save_users(data):
     with open(USERS_FILE, 'w', encoding='utf-8') as f:
