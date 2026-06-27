@@ -89,23 +89,28 @@ def generate_random_password(length=10):
     return ''.join(random.choices(chars, k=length))
 
 def load_users():
+def load_users():
     if not os.path.exists(USERS_FILE):
-        default = {"GTMND": {"password": "GTMND", "role": "GTMND"}}
+        default = {
+            "GTMND": {
+                "password": "GTMND",
+                "role": "admin"
+            }
+        }
         save_users(default)
         return default
+
     with open(USERS_FILE, 'r', encoding='utf-8') as f:
-    with open(USERS_FILE, 'r', encoding='utf-8') as f:
-    data = json.load(f)
+        data = json.load(f)
 
-if 'GTMND' not in data:
-    data['GTMND'] = {
-        "password": "GTMND",
-        "role": "admin"
-    }
-    save_users(data)
+    if 'GTMND' not in data:
+        data['GTMND'] = {
+            "password": "GTMND",
+            "role": "admin"
+        }
+        save_users(data)
 
-return data
-
+    return data
 def save_users(data):
     with open(USERS_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
